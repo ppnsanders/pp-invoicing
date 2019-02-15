@@ -1,0 +1,48 @@
+<div id="configModal" class="ui large modal">
+  <div class="ui icon header">
+	<i class="cogs icon"></i>
+	Invoicing Settings
+  </div>
+  <div class="content">
+		<form class="ui form">
+		  <div class="field">
+			<label>Partner Email:</label>
+			<input type="text" name="pEmail" ng-model="model.config.partner.email" placeholder="Account Name">
+		  </div>
+		  <div class="field">
+			<label>Partner Client ID:</label>
+			<input type="text" name="pClientId" ng-model="model.config.partner.client_id">
+		  </div>
+		  <div class="field">
+			<label>Partner Client Secret</label>
+			<input type="text" name="pClientSecret" ng-model="model.config.partner.client_secret">
+		  </div>
+		  <div class="field">
+			<label>Merchant Email (Sender):</label>
+			<input type="text" name="merchantEmail" ng-model="model.config.merchant.email" placeholder="10">
+		  </div>
+		  <div class="field">
+			<label>Consumer Email (Receiver):</label>
+			<input type="text" name="consumerEmail" ng-model="model.config.consumer.email" placeholder="0">
+		  </div>
+		  <div ng-if="model.access_token" class="disabled field">
+			<label>Access Token:</label>
+			<input type="text" name="access_token" ng-model="model.access_token.creds.access_token">
+		  </div>
+		</form>
+  </div>
+  <div class="actions">
+  	<div ng-click="model.useDefault()" class="ui red button">
+	  <i class="redo icon"></i>
+	  Use Default Creds
+	</div>
+	<div ng-click="model.cancelEditConfig()" class="ui red button">
+	  <i class="remove icon"></i>
+	  Cancel
+	</div>
+	<div ng-click="model.createAccount()" class="ui green  button">
+	  <i class="checkmark icon"></i>
+	  Save Settings
+	</div>
+  </div>
+</div>

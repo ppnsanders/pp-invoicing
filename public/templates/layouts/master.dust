@@ -26,20 +26,19 @@
 
         <!-- Angular Pages -->
         <script src="/js/pages/home-page/directive.js"></script>
+        <script src="/js/pages/config-page/directive.js"></script>
         
         
 
         <!-- Angular Services -->
         <script src="/js/pages/home-page/api.service.js"></script>
-        
+        <script src="/js/pages/config-page/api.service.js"></script>
 
         <!-- Angular Partials -->
         <script src="/js/partials/header-nav/directive.js"></script>
         <script src="/js/partials/footer-nav/directive.js"></script>
         <script src="/js/partials/segment-loader/directive.js"></script>
         
-        <!-- PayPal Shopping Script --> 
-        <script src="https://www.paypal.com/sdk/js?merchant-id=&analytics=custom">
 </script> 
     </body>
 </html>

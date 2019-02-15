@@ -4,7 +4,8 @@ angular.module('ppinvoicing').directive('headerNav', [ () => {
 	return {
 		restrict: 'E',
 		scope: {},
-		controller: ['$scope', ($scope) => {
+		controller: ['$scope', 'configServiceModel', ($scope, configServiceModel) => {
+			$scope.model = configServiceModel
 			$scope.nav = [ 
 							{
 								url: "/home",

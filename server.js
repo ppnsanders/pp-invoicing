@@ -1,5 +1,10 @@
 'use strict';
 
+global.Environment = () => {
+	//if sandbox return true
+	return true
+}
+
 var app = require('./index');
 var http = require('http');
 
