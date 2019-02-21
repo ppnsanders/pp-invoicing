@@ -12,6 +12,7 @@ The App is quite simple.
 3. run `npm install`
 4. run `bower install`
 5. run `npm start`
+6. Open your browser to [http://localhost:8000/](http://localhost:8000/)
 
 On the "home page", you'll see the Invoice Fields and Object.  Before editing those details, click on the "gears" icon in the top right to setup your API credentials.
 
