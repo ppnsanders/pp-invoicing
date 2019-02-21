@@ -4,24 +4,14 @@ angular.module('ppinvoicing').service('configServiceModel', function ($http, $co
 
 function setup() {
 	model.config = $cookies.getObject('invoicing-config')
-	if(typeof model.config === 'undefined') {
-		model.useDefault()
-	} else {
-		model.getAccessToken()
-	}
 }
 
 function useDefault() {
-	if( $("#configModal").is(':visible') ){
-		$('#configModal').modal('hide')
-	} else {
-		//nada
-	}
 	model.config = {
 		partner: {
 			email: "githubMerchant@paypal.com",
-			client_id: "AaG-RtYFtgzsjnbdeCyCRUvvc-MqGS5iBPlFEFbD3rQQqCQkkSFfwgfV7_Aj9cBhLN8N0RYYDCYD8ZF3",
-			client_secret: "EHMZH8qQ3cyzNQT_3xJo6PbblNOxfXVkOtC0PV_m9HLUN5HrkXgrzQoXs4t_-xAg05fl60HS8eM8iNPm"
+			client_id: "AWAbuRjmtZicNcbRrtcJNnJgcSY9zpDz7geeAAHu4yJF2AmVbr7DF7nQ7o77d4xg1p6KDJVWhbipYyAG",
+			client_secret: "EG6K73OvNJOH9hqG4TOc-G8hswFyXlfpYwQZKTe6_trB4_8nXkV-o1cUNMJHpoEoU6q5lEE3peXLLwat"
 		},
 		merchant: {
 			email: "invSender@paypal.com"
@@ -32,19 +22,29 @@ function useDefault() {
 	}
 	$cookies.putObject('invoicing-config', model.config)
 	model.getAccessToken()
+	model.errorMsg.message = ""
+	$('#useDefaultButton').hide()
+	$('#cancelEditButton').hide()
+	$('#connectMerchantButton').hide()
+	$('#errorMsg').hide()
 }
 
 function getAccessToken() {
-	$cookies.putObject('inv-auth', {})
-	const reqUrl = '/api/invoice/access_token'
-	const config = {
-        'xsrfHeaderName': 'X-CSRF-TOKEN',
-        'xsrfCookieName': 'XSRF-TOKEN'
-    }
-	return $http.post(reqUrl, model.config.partner, config).then((response) => {
-			model.access_token = response.data
-			$cookies.putObject('inv-auth', model.access_token)
+	if(model.validatePartnerConfig()) {
+		$cookies.putObject('inv-auth', {})
+		const reqUrl = '/api/invoice/access_token'
+		const config = {
+	        'xsrfHeaderName': 'X-CSRF-TOKEN',
+	        'xsrfCookieName': 'XSRF-TOKEN'
+	    }
+		return $http.post(reqUrl, model.config.partner, config).then((response) => {
+					model.access_token = response.data
+					$cookies.putObject('inv-auth', model.access_token)
 		})
+	} else {
+		//do nothing, but show errors
+		return false
+	}
 }
 
 function cancelEditConfig() {
@@ -56,14 +56,170 @@ function showConfigModal() {
 }
 
 function saveSettings() {
-	$cookies.putObject('invoicing-config', model.config)
-	model.getAccessToken()
+	if(model.validateConfig()) {
+		$cookies.putObject('invoicing-config', model.config)
+		model.getAccessToken()
+		$('#configModal').modal('hide')
+	} else {
+		//do nothing, show errors
+		console.log('here')
+		return false
+	}
 }
+
+function validateConfig() {
+	const conConfig = model.validateConsumerConfig()
+	const merConfig = model.validateMerchantConfig()
+	const parConfig = model.validatePartnerConfig()
+	if(conConfig === true && merConfig === true && parConfig === true) {
+		return true
+	} else {
+		return false
+	}
+}
+
+function validateConsumerConfig() {
+	if(typeof model.config !== 'undefined'){
+		if(typeof model.config.consumer !== 'undefined') {
+			if(typeof model.config.consumer.email !== 'undefined') {
+				return true
+			} else {
+				model.errorMsg.message = model.errorMsg.message + "You must have a Consumer Email Address"
+				$('#errorMsg').show()
+				return false
+			}
+		} else {
+			model.errorMsg.message = model.errorMsg.message + "You must have a Consumer Email Address"
+			$('#errorMsg').show()
+			return false
+		}
+	} else {
+		model.errorMsg.message = model.errorMsg.message + "You must have a Consumer Email Address"
+		$('#errorMsg').show()
+		return false
+	}
+}
+
+function validateMerchantConfig() {
+	if(typeof model.config !== 'undefined'){
+		if(typeof model.config.merchant !== 'undefined') {
+			if(typeof model.config.merchant.email !== 'undefined') {
+				return true
+			} else {
+				model.errorMsg.message = model.errorMsg.message + "You must have a Merchant Email Address"
+				$('#errorMsg').show()
+				return false
+			}
+		} else {
+			model.errorMsg.message = model.errorMsg.message + "You must have a Merchant Email Address"
+			$('#errorMsg').show()
+			return false
+		}
+	} else {
+		model.errorMsg.message = model.errorMsg.message + "You must have a Merchant Email Address"
+		$('#errorMsg').show()
+		return false
+	}
+}
+
+function validatePartnerConfig() {
+	if(typeof model.config !== 'undefined'){
+		if(typeof model.config.partner !== 'undefined') {
+			if(typeof model.config.partner.client_id !== 'undefined') {
+				if(typeof model.config.partner.client_secret !== 'undefined') {
+					if(typeof model.config.partner.email !== 'undefined') {
+						return true
+					} else {
+						model.errorMsg.message = model.errorMsg.message + "You must have a Partner Email Address"
+						$('#errorMsg').show()
+						return false
+					}
+				} else {
+					model.errorMsg.message = model.errorMsg.message + "You must have a Partner Client_Secret"
+					$('#errorMsg').show()
+					return false
+				}
+			} else {
+				model.errorMsg.message = "You must input a Partner Client_Id"
+				$('#errorMsg').show()
+				return false
+			}
+		} else {
+			model.errorMsg.message = "You must input Partner Details"
+			$('#errorMsg').show()
+			return false
+		}
+	} else {
+		model.errorMsg.message = "You must input Partner Details"
+		$('#errorMsg').show()
+		return false
+	}
+}
+
+function connectMerchant() {
+	if(model.validatePartnerConfig()) {
+		$('#configured').hide()
+		$('#useDefaultButton').hide()
+		$('#cancelEditButton').hide()
+		$('#saveSettingsButton').hide()
+		$('#connectMerchantButton').hide()
+		$('#cancelConnectMerchantButton').show()
+		$('#connectMerchant').show()
+	} else {}
+}
+
+function cancelConnectMerchant() {
+	$('#cancelConnectMerchantButton').hide()
+	$('#connectMerchant').hide()
+	$('#configured').show()
+	$('#useDefaultButton').show()
+	$('#cancelEditButton').show()
+	$('#saveSettingsButton').show()
+	$('#connectMerchantButton').show()
+}
+
+function getTokenFromCode() {
+	const reqUrl = "/api/config/generate"
+	const config = {
+        'xsrfHeaderName': 'X-CSRF-TOKEN',
+        'xsrfCookieName': 'XSRF-TOKEN'
+    }
+    const reqObj = {}
+    	  reqObj.code = model.query.code
+    	  reqObj.partner = {}
+    	  reqObj.partner.client_id = model.config.partner.client_id
+    	  reqObj.partner.client_secret = model.config.partner.client_secret
+	return $http.post(reqUrl, reqObj, config).then((response) => {
+		model.access_token = response.data
+		$cookies.putObject('inv-auth', model.access_token)
+		model.refresh_token = response.data.creds.body.refresh_token
+		$cookies.putObject('invoicing-refresh-token', model.refresh_token)
+		model.showConfigModal()
+		model.getMerchantEmail()
+	})
+}
+
+function getMerchantEmail() {
+	const reqUrl = "/api/config/merchantEmail"
+	const config = {
+        'xsrfHeaderName': 'X-CSRF-TOKEN',
+        'xsrfCookieName': 'XSRF-TOKEN'
+    }
+	return $http.post(reqUrl, { access_token: model.access_token }, config).then((response) => {
+		model.config.merchant.email = response.data.email
+		console.log('got email: ', model.config)
+		$cookies.putObject('invoicing-config', model.config)
+	})
+}
+
 
 
 let model = {
 	config: {},
+	query: {},
 	access_token: "",
+	refresh_token: "",
+	errorMsg: { message: "Fill out the Form"},
 	setup: (model) => {
 		return setup(model)
 	},
@@ -81,6 +237,30 @@ let model = {
 	},
 	saveSettings: (model) => {
 		return saveSettings(model)
+	},
+	connectMerchant: (model) => {
+		return connectMerchant(model)
+	},
+	cancelConnectMerchant: (model) => {
+		return cancelConnectMerchant(model)
+	},
+	getTokenFromCode: (model) => {
+		return getTokenFromCode(model)
+	},
+	getMerchantEmail: (model) => {
+		return getMerchantEmail(model)
+	},
+	validateConfig: (model) => {
+		return validateConfig(model)
+	},
+	validatePartnerConfig: (model) => {
+		return validatePartnerConfig(model)
+	},
+	validateMerchantConfig: (model) => {
+		return validateMerchantConfig(model)
+	},
+	validateConsumerConfig: (model) => {
+		return validateConsumerConfig(model)
 	}
 }
  

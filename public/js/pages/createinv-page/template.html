@@ -1,0 +1,502 @@
+<div id="invoiceView">
+    <div class="ui grid">
+        <div class="two column row" id="invoiceRequestObjectPage">
+            <div class="column" id="invoiceFields">
+                <center><h3>Invoice Fields</h3></center>
+                <div class="ui form">
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>detail.invoice_number:</label>
+                            <input type="text" ng-model="model.invoiceObj.detail.invoice_number">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>detail.reference:</label>
+                            <input type="text" ng-model="model.invoiceObj.detail.reference">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>detail.invoice_date:</label>
+                            <input type="text" ng-model="model.invoiceObj.detail.invoice_date">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>detail.currency_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.detail.currency_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>detail.note:</label>
+                            <input type="text" ng-model="model.invoiceObj.detail.note">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>detail.memo:</label>
+                            <input type="text" ng-model="model.invoiceObj.detail.memo">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>payment_term.term_type:</label>
+                            <input type="text" ng-model="model.invoiceObj.detail.payment_term.term_type">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>payment_term.due_date:</label>
+                            <input type="text" ng-model="model.invoiceObj.detail.payment_term.due_date">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.name.given_name:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.name.given_name">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.name.surname:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.name.surname">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.address.address_line_1:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.address.address_line_1">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.address.address_line_2:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.address.address_line_2">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.address.admin_area_2:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.address.admin_area_2">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.address.admin_area_1:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.address.admin_area_1">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.address.postal_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.address.postal_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.address.country_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.address.country_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.email_address:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.email_address">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.phones[0].country_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.phones[0].country_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.phones[0].national_number:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.phones[0].national_number">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.phones[0].phone_type:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.phones[0].phone_type">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.website:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.website">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.tax_id:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.tax_id">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.logo_url:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.logo_url">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>invoicer.additional_notes:</label>
+                            <input type="text" ng-model="model.invoiceObj.invoicer.additional_notes">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.name.given_name:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.name.given_name">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.name.surname:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.name.surname">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.address.address_line_1:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.address.address_line_1">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.address.address_line_2:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.address.address_line_2">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.address.admin_area_2:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.address.admin_area_2">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.address.admin_area_1:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.address.admin_area_1">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.address.postal_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.address.postal_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.address.country_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.address.country_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.email_address:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.email_address">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.phones[0].country_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.phones[0].country_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.phones[0].national_number:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.phones[0].national_number">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.phones[0].phone_type:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.phones[0].phone_type">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.additional_info_value:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.additional_info_value">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].shipping_info.name.given_name:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].shipping_info.name.given_name">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].shipping_info.name.surname:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].shipping_info.name.surname">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].shipping_info.address.address_line_1:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].shipping_info.address.address_line_1">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].shipping_info.address.address_line_2:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].shipping_info.address.address_line_2">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].shipping_info.address.admin_area_2:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].shipping_info.address.admin_area_2">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].shipping_info.address.admin_area_1:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].shipping_info.address.admin_area_1">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].shipping_info.address.postal_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].shipping_info.address.postal_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>primary_recipients[0].billing_info.address.country_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.primary_recipients[0].billing_info.address.country_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>items[0].name:</label>
+                            <input type="text" ng-model="model.invoiceObj.items[0].name">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>items[0].description:</label>
+                            <input type="text" ng-model="model.invoiceObj.items[0].description">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>items[0].quantity:</label>
+                            <input type="text" ng-model="model.invoiceObj.items[0].quantity">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>items[0].unit_amount.currency_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.items[0].unit_amount.currency_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>items[0].unit_amount.value:</label>
+                            <input type="text" ng-model="model.invoiceObj.items[0].unit_amount.value">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>items[0].tax.name:</label>
+                            <input type="text" ng-model="model.invoiceObj.items[0].tax.name">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>items[0].tax.percent:</label>
+                            <input type="text" ng-model="model.invoiceObj.items[0].tax.percent">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>items[0].discount.percent:</label>
+                            <input type="text" ng-model="model.invoiceObj.items[0].discount.percent">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>items[0].unit_of_measure:</label>
+                            <input type="text" ng-model="model.invoiceObj.items[0].unit_of_measure">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>configuration.partial_payment.allow_partial_payment:</label>
+                            <input type="text" ng-model="model.invoiceObj.configuration.partial_payment.allow_partial_payment">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>configuration.partial_payment.minimum_amount_due.currency_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.configuration.partial_payment.minimum_amount_due.currency_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>configuration.partial_payment.minimum_amount_due.value:</label>
+                            <input type="text" ng-model="model.invoiceObj.configuration.partial_payment.minimum_amount_due.value">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>configuration.allow_tip:</label>
+                            <input type="text" ng-model="model.invoiceObj.configuration.allow_tip">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>configuration.tax_calculated_after_discount:</label>
+                            <input type="text" ng-model="model.invoiceObj.configuration.tax_calculated_after_discount">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>configuration.tax_inclusive:</label>
+                            <input type="text" ng-model="model.invoiceObj.configuration.tax_inclusive">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>amount.breakdown.custom.label:</label>
+                            <input type="text" ng-model="model.invoiceObj.amount.breakdown.custom.label">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>amount.breakdown.custom.amount.currency_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.amount.breakdown.custom.amount.currency_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>amount.breakdown.custom.amount.value:</label>
+                            <input type="text" ng-model="model.invoiceObj.amount.breakdown.custom.amount.value">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>amount.breakdown.shipping.amount.currency_code:</label>
+                            <input type="text" ng-model="model.invoiceObj.amount.breakdown.shipping.amount.currency_code">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>amount.breakdown.shipping.amount.value:</label>
+                            <input type="text" ng-model="model.invoiceObj.amount.breakdown.shipping.amount.value">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>amount.breakdown.shipping.tax.name:</label>
+                            <input type="text" ng-model="model.invoiceObj.amount.breakdown.shipping.tax.name">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>amount.breakdown.shipping.tax.percent:</label>
+                            <input type="text" ng-model="model.invoiceObj.amount.breakdown.shipping.tax.percent">
+                        </div>
+                    </div>
+                    <div class="inline fields">
+                        <div class="sixteen wide field">
+                            <label>amount.breakdown.discount.invoice_discount.percent:</label>
+                            <input type="text" ng-model="model.invoiceObj.amount.breakdown.discount.invoice_discount.percent">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="invoiceRequestObject" class="column">
+                <center><h3>Invoice Request Object</h3></center>
+                <button id="createInvoiceButton" class="fluid ui primary button" ng-click="model.createInvoice()">Create Invoice</button>
+                <div class="ui segment" style="overflow: scroll; margin-top: 20px;">
+                    <pre>
+                        [[model.invoiceObj | json]]
+                    </pre>
+                </div>
+            </div>
+            <div id="invoiceResponseObject" class="column" style="display: none;">
+                <div id="invoiceLoading" style="display: none;">
+                    <segment-loader></segment-loader>
+                </div>
+                <center><h3>Invoice Response Object</h3></center>
+                <button id="showSendInvoiceButton" style="display: none;" class="fluid ui primary button" ng-click="model.showSendInvoice()">Continue to Send Invoice</button>
+                <div id="invoiceResponseJson" style="display: none;">
+                    <div class="ui segment" style="overflow: scroll; margin-top: 20px;">
+                        <pre>
+                            [[model.invoiceResponse | json]]
+                        </pre>
+                    </div>
+                </div>
+            </div>
+            <div id="sendInvoiceRequest" class="column" style="display: none;">
+                <center><h3>Send Invoice Request Fields</h3></center>
+                <div id="sendInvoiceRequestFields" style="display: none;">
+                    <div class="ui form">
+                        <div class="inline fields">
+                            <div class="sixteen wide field">
+                                <label>send_to_invoicer:</label>
+                                <input type="text" ng-model="model.sendObj.send_to_invoicer" placeholder="false">
+                            </div>
+                        </div>
+                        <div class="inline fields">
+                            <div class="sixteen wide field">
+                                <label>send_to_recipient:</label>
+                                <input type="text" ng-model="model.sendObj.send_to_recipient" placeholder="false">
+                            </div>
+                        </div>
+                        <div ng-if="model.sendObj.send_to_recipient" class="inline fields">
+                            <div class="sixteen wide field">
+                                <label>subject:</label>
+                                <input type="text" ng-model="model.sendObj.subject" placeholder="YOUR INVOICE">
+                            </div>
+                        </div>
+                        <div ng-if="model.sendObj.send_to_recipient" class="inline fields">
+                            <div class="sixteen wide field">
+                                <label>note:</label>
+                                <input type="text" ng-model="model.sendObj.note" placeholder="NOTE TO PAYER">
+                            </div>
+                        </div>
+                        <div ng-if="model.sendObj.send_to_recipient" class="inline fields">
+                            <div class="sixteen wide field">
+                                <label>additional_recipients[0].email_address:</label>
+                                <input type="text" ng-model="model.sendObj.additional_recipients[0].email_address" placeholder="invSender@paypal.com">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sendInvoiceRequestObj" class="column" style="display: none;">
+                <center><h3>Send Invoice Request Object</h3></center>
+                <button id="sendInvoiceButton" style="display: none;" class="fluid ui primary button" ng-click="model.sendInvoice()">Send Invoice</button>
+                <div class="ui segment" style="overflow: scroll; margin-top: 20px;">
+                    <pre>
+                        [[model.sendObj | json]]
+                    </pre>
+                </div>
+            </div>
+            <div id="sendInvoiceResponse" class="column" style="display: none;">
+                <div id="sendInvoiceResponseLoading" style="display: none;">
+                    <segment-loader></segment-loader>
+                </div>
+                <center><h3>Send Invoice Response Object</h3></center>
+                <a ng-if="!model.sendObj.send_to_recipient" id="showCustomInvoiceButton" style="display: none;" class="fluid ui primary button" href="/custominv?inv=[[model.invoiceId]]" target="_self">Show Custom Invoice</a>
+                <div id="sendInvoiceResponseJson" style="display: none;">
+                    <div class="ui segment" style="overflow: scroll; margin-top: 20px;">
+                        <pre>
+                            [[model.sendResponse | json]]
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

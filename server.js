@@ -1,8 +1,8 @@
 'use strict';
 
 global.Environment = () => {
-	//if sandbox return true
-	return true
+	//return the API URL
+	return "https://api.sandbox.paypal.com"
 }
 
 var app = require('./index');

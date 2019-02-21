@@ -1,0 +1,15 @@
+<center>
+	<span id="cwppButton"></span>
+</center>
+<script>
+paypal.use( ['login'], function (login) {
+  login.render ({
+    "appid": "AWAbuRjmtZicNcbRrtcJNnJgcSY9zpDz7geeAAHu4yJF2AmVbr7DF7nQ7o77d4xg1p6KDJVWhbipYyAG",
+    "authend":"sandbox",
+    "scopes": "email openid https://uri.paypal.com/services/invoicing",
+    "containerid":"cwppButton",
+    "locale":"en-us",
+    "returnurl":"https://localhost.paypalinc.com/config"
+  });
+});
+</script>

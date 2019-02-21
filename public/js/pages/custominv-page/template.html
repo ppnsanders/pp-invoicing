@@ -1,0 +1,183 @@
+<div class="ui grid">
+	<div class="one column row">
+		<div class="column">
+			<a ng-if="model.unpaid" target="_blank" class="fluid ui primary button" href="https://www.sandbox.paypal.com/invoice/p#[[model.invoiceId]]">Pay My Invoice</a>
+			<div style="margin-top: 10px;"></div>
+			<center><a href="[[model.invoice.invoicer.website]]" target="_blank"><img src="[[model.invoice.invoicer.logo_url]]" height="150" alt="Company Logo" /></a></center>
+		</div>
+	</div>
+	<div class="two column row">
+		<div class="column">
+			FROM: [[model.invoice.invoicer.name.given_name]] [[model.invoice.invoicer.name.surname]]
+			<address>
+				[[model.invoice.invoicer.address.address_line_1]] <br />
+				[[model.invoice.invoicer.address.address_line_2]] <br />
+				[[model.invoice.invoicer.address.admin_area_2]], [[model.invoice.invoicer.address.admin_area_1]] [[model.invoice.invoicer.address.postal_code]]  <br />
+				[[model.invoice.invoicer.address.country_code]] <br />
+			</address>
+		</div>
+	  	<div class="column">Email: <a href="mailto:[[model.invoice.invoicer.email_address]]">[[model.invoice.invoicer.email_address]]</a> - [[model.invoice.invoicer.phones[0].phone_type]] Phone: <a href="tell: +[[model.invoice.invoicer.phones[0].country_code]][[model.invoice.invoicer.phones[0].national_number]]">[[model.invoice.invoicer.phones[0].country_code]]-[[model.invoice.invoicer.phones[0].national_number]]</a></div>
+	  	<div class="column"></div>
+	</div>
+	<div class="two column row">
+		<div class="column">
+			TO: [[model.invoice.primary_recipients[0].billing_info.name.given_name]] [[model.invoice.primary_recipients[0].billing_info.name.surname]]
+			<address>
+				[[model.invoice.primary_recipients[0].billing_info.address.address_line_1]] <br />
+				[[model.invoice.primary_recipients[0].billing_info.address.address_line_2]] <br />
+				[[model.invoice.primary_recipients[0].billing_info.address.admin_area_2]], [[model.invoice.primary_recipients[0].billing_info.address.admin_area_1]] [[model.invoice.primary_recipients[0].billing_info.address.postal_code]]  <br />
+				[[model.invoice.primary_recipients[0].billing_info.address.country_code]] <br />
+			</address>
+		</div>
+	  	<div class="column">Email: <a href="mailto:[[model.invoice.primary_recipients[0].billing_info.email_address]]">[[model.invoice.primary_recipients[0].billing_info.email_address]]</a></div>
+	  	<div class="column"></div>
+	</div>
+	<div class="three column row">
+		<div class="column">
+			Invoice Number: [[model.invoice.detail.invoice_number]] <br />
+			Invoice Date: [[model.invoice.detail.invoice_date]] <br />
+			Reference ID: [[model.invoice.detail.reference]]
+		</div>
+		<div class="column">
+			Invoice Due Date: [[model.invoice.detail.payment_term.due_date]] <br />
+			Terms and Conditions: [[model.invoice.detail.terms_and_conditions]] <br />
+			Memo: [[model.invoice.detail.memo]]
+		</div>
+		<div class="column">
+			Invoice Note: [[model.invoice.detail.note]] <br />
+			Additional Details: [[model.invoice.detail.additional_data]] <br />
+		</div>
+	</div>
+	<div class="one column row">
+		<div class="column">
+			<table class="ui celled table">
+				<thead>
+				  	<tr>
+				  		<th>Name</th>
+				  		<th>Description</th>
+				  		<th>Quantity</th>
+				  		<th>Unit Amount</th>
+				  		<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+				  	<tr ng-repeat="item in model.invoice.items">
+				    	<td data-label="Name">[[item.name]]</td>
+				    	<td data-label="Description">[[item.description]]</td>
+				    	<td data-label="Quantity">[[item.quantity]]</td>
+				    	<td data-label="Unit Amount">[[item.unit_amount.value | currency: "$"]]</td>
+				    	<td data-label="Total" class="right aligned">[[item.quantity * item.unit_amount.value | currency: "$"]]</td>
+				  	</tr>
+				  	<tr>
+				  		<td></td>
+				  		<td></td>
+				  		<td></td>
+				  		<td class="right aligned">Item Total</td>
+				    	<td class="right aligned">[[model.invoice.amount.breakdown.item_total.value | currency: "$"]]</td>
+				  	</tr>
+				  	<tr>
+				  		<td></td>
+				  		<td></td>
+				  		<td></td>
+				  		<td class="right aligned">Discount Total</td>
+				    	<td class="right aligned">[[model.discountTotal | currency: "$"]]</td>
+				  	</tr>
+				  	<tr>
+				  		<td></td>
+				  		<td></td>
+				  		<td></td>
+				  		<td class="right aligned">Tax Total</td>
+				    	<td class="right aligned">[[model.invoice.amount.breakdown.tax_total.value | currency: "$"]]</td>
+				  	</tr>
+				  	<tr ng-if="model.invoice.amount.breakdown.custom">
+				  		<td></td>
+				  		<td></td>
+				  		<td></td>
+				  		<td class="right aligned">[[model.invoice.amount.breakdown.custom.label]]</td>
+				    	<td class="right aligned">[[model.invoice.amount.breakdown.custom.amount.value | currency: "$"]]</td>
+				  	</tr>
+				  	<tr>
+				  		<td></td>
+				  		<td></td>
+				  		<td></td>
+				  		<td class="right aligned">Grand Total</td>
+				    	<td class="right aligned">[[model.invoice.amount.value | currency: "$"]]</td>
+				  	</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div ng-if="model.transactions" class="one column row">
+		<div class="column">
+			<table class="ui celled table">
+				<thead>
+				  	<tr>
+				  		<th>Transaction ID</th>
+				  		<th>Date</th>
+				  		<th>Method</th>
+				  		<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody>
+				  	<tr ng-repeat="trx in model.invoice.payments.transactions">
+				    	<td data-label="Transaction ID">[[trx.payment_id]]</td>
+				    	<td data-label="Date">[[trx.payment_date]]</td>
+				    	<td data-label="Method">[[trx.method]]</td>
+				    	<td data-label="Amount" class="right aligned">[[trx.amount.value | currency: "$"]]</td>
+				  	</tr>
+				  	<tr>
+				  		<td></td>
+				  		<td></td>
+				  		<td class="right aligned">Total Payments</td>
+				    	<td class="right aligned">[[model.invoice.payments.paid_amount.value | currency: "$"]]</td>
+				    </tr>
+				    <tr>
+				  		<td></td>
+				  		<td></td>
+				  		<td class="right aligned">Gratuity (Thank You!)</td>
+				    	<td class="right aligned">[[model.invoice.gratuity.value | currency: "$"]]</td>
+				    </tr>
+				    <tr>
+				  		<td></td>
+				  		<td></td>
+				  		<td class="right aligned">Amount Due</td>
+				    	<td class="right aligned"><strong style="color: red;">[[model.invoice.due_amount.value | currency: "$"]]</strong></td>
+				  	</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="three column row">
+		<div class="column">
+			SHIP TO: [[model.invoice.primary_recipients[0].shipping_info.name.given_name]] [[model.invoice.primary_recipients[0].shipping_info.name.surname]]
+			<address>
+				[[model.invoice.primary_recipients[0].shipping_info.address.address_line_1]] <br />
+				[[model.invoice.primary_recipients[0].shipping_info.address.address_line_2]] <br />
+				[[model.invoice.primary_recipients[0].shipping_info.address.admin_area_2]], [[model.invoice.primary_recipients[0].shipping_info.address.admin_area_1]] [[model.invoice.primary_recipients[0].shipping_info.address.postal_code]]  <br />
+				[[model.invoice.primary_recipients[0].shipping_info.address.country_code]] <br />
+			</address>
+		</div>
+	  	<div class="column"></div>
+	  	<div class="column"></div>
+	</div>
+	<div class="one column row">
+		<div class="column">
+			<a ng-if="model.unpaid" target="_blank" class="fluid ui primary button" href="https://www.sandbox.paypal.com/invoice/p#[[model.invoiceId]]">Pay My Invoice</a>
+		</div>
+	</div>
+	<div class="one column row">
+		<div class="column">
+			<div class="ui styled fluid accordion">
+  				<div class="title">
+    				<i class="dropdown icon"></i>
+    				Full API Response JSON
+  				</div>
+  				<div class="content">
+    				<pre>
+    					[[model.invoice | json]]
+    				</pre>
+  				</div>
+			</div>
+		</div>
+	</div>
+</div>

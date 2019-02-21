@@ -5,19 +5,24 @@ const faker = require('faker')
 
 module.exports = function InvoiceModel(invData) {
 	const dt = new Date()
-	const invDate = dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" + ("0" + (dt.getDate()).slice(-2)
-	const dueDate = dt.setDate(10)
+	const invDate = "" + dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" + ("0" + (dt.getDate())).slice(-2) + ""
+
+	const ddt = new Date()
+		  ddt.setDate(ddt.getDate() + 10)
+	const dueDate = "" + ddt.getFullYear() + "-" + ("0" + (ddt.getMonth() + 1)).slice(-2) + "-" + ("0" + (ddt.getDate())).slice(-2) + ""
+
 	let inv = {}
 		inv.detail = {}
-		inv.detail.invoice_number = Date.now()
+		inv.detail.invoice_number = "" + Date.now() + ""
 		inv.detail.reference = "REF-" + inv.detail.invoice_number
 		inv.detail.invoice_date = invDate
 		inv.detail.currency_code = "USD"
 		inv.detail.note = faker.random.words()
+		inv.detail.terms_and_conditions = faker.random.words()
 		inv.detail.memo = faker.random.words()
-		inv.payment_term = {}
-		inv.payment_term.term_type = "NET_10"
-		inv.payment_term.due_date = dueDate
+		inv.detail.payment_term = {}
+		inv.detail.payment_term.term_type = "NET_10"
+		inv.detail.payment_term.due_date = dueDate
 
 		//Invoicer
 		inv.invoicer = {}
@@ -27,19 +32,19 @@ module.exports = function InvoiceModel(invData) {
 		inv.invoicer.address = {}
 		inv.invoicer.address.address_line_1 = faker.address.streetAddress()
 		inv.invoicer.address.address_line_2 = faker.address.secondaryAddress()
-		inv.invoicer.address.admin_area_1 = faker.address.city()
-		inv.invoicer.address.admin_area_2 = "NE"
+		inv.invoicer.address.admin_area_2 = faker.address.city()
+		inv.invoicer.address.admin_area_1 = "NE"
 		inv.invoicer.address.postal_code = "68046"
 		inv.invoicer.address.country_code = "US"
-		inv.invoicer.email = invData.merchant.email
+		inv.invoicer.email_address = invData.merchant.email
 		inv.invoicer.phones = []
 		inv.invoicer.phones[0] = {}
 		inv.invoicer.phones[0].country_code = "001"
 		inv.invoicer.phones[0].national_number = "8882211161"
 		inv.invoicer.phones[0].phone_type = "MOBILE"
-		inv.invoicer.website = faker.internet.url()
+		inv.invoicer.website = "https://www.paypal.com"
 		inv.invoicer.tax_id = faker.random.uuid()
-		inv.invoicer.logo_url = faker.image.imageUrl()
+		inv.invoicer.logo_url = "https://lorempixel.com/640/150"
 		inv.invoicer.additional_notes = faker.random.words()
 
 		//Primary Recipients
@@ -52,8 +57,8 @@ module.exports = function InvoiceModel(invData) {
 		inv.primary_recipients[0].billing_info.address = {}
 		inv.primary_recipients[0].billing_info.address.address_line_1 = faker.address.streetAddress()
 		inv.primary_recipients[0].billing_info.address.address_line_2 = faker.address.secondaryAddress()
-		inv.primary_recipients[0].billing_info.address.admin_area_1 = faker.address.city()
-		inv.primary_recipients[0].billing_info.address.admin_area_2 = "NE"
+		inv.primary_recipients[0].billing_info.address.admin_area_2 = faker.address.city()
+		inv.primary_recipients[0].billing_info.address.admin_area_1 = "NE"
 		inv.primary_recipients[0].billing_info.address.postal_code = "68046"
 		inv.primary_recipients[0].billing_info.address.country_code = "US"
 		inv.primary_recipients[0].billing_info.email_address = invData.consumer.email
@@ -67,10 +72,11 @@ module.exports = function InvoiceModel(invData) {
 		inv.primary_recipients[0].shipping_info.name = {}
 		inv.primary_recipients[0].shipping_info.name.given_name = inv.primary_recipients[0].billing_info.name.given_name
 		inv.primary_recipients[0].shipping_info.name.surname = inv.primary_recipients[0].billing_info.name.surname
+		inv.primary_recipients[0].shipping_info.address = {}
 		inv.primary_recipients[0].shipping_info.address.address_line_1 = faker.address.streetAddress()
 		inv.primary_recipients[0].shipping_info.address.address_line_2 = faker.address.secondaryAddress()
-		inv.primary_recipients[0].shipping_info.address.admin_area_1 = faker.address.city()
-		inv.primary_recipients[0].shipping_info.address.admin_area_2 = "NE"
+		inv.primary_recipients[0].shipping_info.address.admin_area_2 = faker.address.city()
+		inv.primary_recipients[0].shipping_info.address.admin_area_1 = "NE"
 		inv.primary_recipients[0].shipping_info.address.postal_code = "68046"
 		inv.primary_recipients[0].shipping_info.address.country_code = "US"
 
@@ -79,10 +85,10 @@ module.exports = function InvoiceModel(invData) {
 		inv.items[0] = {}
 		inv.items[0].name = faker.hacker.noun()
 		inv.items[0].description = faker.random.words()
-		inv.items[0].quantity = "" + faker.random.number() + ""
+		inv.items[0].quantity = "" + Math.floor(Math.random() * 11) + 1 + ""
 		inv.items[0].unit_amount = {}
 		inv.items[0].unit_amount.currency_code = "USD"
-		inv.items[0].unit_amount.value = "" + faker.random.number() + ""
+		inv.items[0].unit_amount.value = "" + Math.floor(Math.random() * 11) + ""
 		inv.items[0].tax = {}
 		inv.items[0].tax.name = "Sales Tax"
 		inv.items[0].tax.percent = "7.25"
@@ -115,11 +121,9 @@ module.exports = function InvoiceModel(invData) {
 		inv.amount.breakdown.shipping.amount = {}
 		inv.amount.breakdown.shipping.amount.currency_code = "USD"
 		inv.amount.breakdown.shipping.amount.value = "10.00"
-
-		//AMOUNT.TAX
-		inv.amount.breakdown.tax = {}
-		inv.amount.breakdown.tax.name = inv.items[0].tax.name
-		inv.amount.breakdown.tax.percent = inv.items[0].tax.percent
+		inv.amount.breakdown.shipping.tax = {}
+		inv.amount.breakdown.shipping.tax.name = inv.items[0].tax.name
+		inv.amount.breakdown.shipping.tax.percent = inv.items[0].tax.percent
 
 		//AMOUNT.DISCOUNT
 		inv.amount.breakdown.discount = {}

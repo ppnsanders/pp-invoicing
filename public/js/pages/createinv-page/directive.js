@@ -8,6 +8,6 @@ angular.module('ppinvoicing').directive('createinvPage', [ () => {
 			$scope.model = createinvServiceModel
 			$scope.model.setup()
 		}],
-		templateUrl: '/js/pages/config-page/template.html'
+		templateUrl: '/js/pages/createinv-page/template.html'
 	}
 }])

@@ -4,18 +4,22 @@ angular.module('ppinvoicing').directive('headerNav', [ () => {
 	return {
 		restrict: 'E',
 		scope: {},
-		controller: ['$scope', 'configServiceModel', ($scope, configServiceModel) => {
-			$scope.model = configServiceModel
+		controller: ['$scope', '$location', ($scope, $location) => {
+			if($location.path() === '/config'){
+				$scope.showSettings = false
+				$('#configModal').modal('show')
+			} else {
+				$scope.showSettings = true
+			}
 			$scope.nav = [ 
 							{
-								url: "/home",
-								text: "Home"
-							},
-							{
-								url: "/page2",
-								text: "Page 2"
+								url: "/createinv",
+								text: "Create Invoice"
 							}
 						]
+			$scope.showConfigModal = () => {
+				$('#configModal').modal('show')
+			}
 		}],
 		templateUrl: '/js/partials/header-nav/template.html'
 	}
