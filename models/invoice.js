@@ -44,7 +44,7 @@ module.exports = function InvoiceModel(invData) {
 		inv.invoicer.phones[0].phone_type = "MOBILE"
 		inv.invoicer.website = "https://www.paypal.com"
 		inv.invoicer.tax_id = faker.random.uuid()
-		inv.invoicer.logo_url = "https://example.com/logo.PNG"
+		inv.invoicer.logo_url = "https://avatars1.githubusercontent.com/u/476675?s=200&v=4"
 		inv.invoicer.additional_notes = faker.random.words()
 
 		//Primary Recipients
