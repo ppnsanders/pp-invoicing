@@ -39,7 +39,7 @@ function createInvoice() {
     		$('#invoiceLoading').hide('slide')
     		$('#invoiceResponseJson').show()
     		$('#showSendInvoiceButton').show()
-    	}, 1500)
+    	}, 1000)
     })
 }
 
@@ -94,7 +94,6 @@ function sendInvoice() {
 }
 
 function showCustomInvoicePage() {
-	
 	const customInvoiceUrl = '/custominv?inv=' + model.invoiceId
 	$location.url(customInvoiceUrl)
 }

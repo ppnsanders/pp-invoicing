@@ -25,13 +25,17 @@
 			<label>Consumer Email (Receiver):</label>
 			<input type="text" name="consumerEmail" ng-model="model.config.consumer.email" placeholder="invReceiver@domain.com">
 		  </div>
-		  <div ng-if="model.access_token" class="disabled field">
+		  <div id="accessTokenField" class="disabled field" style="display: none;">
 			<label>Access Token:</label>
 			<input type="text" name="access_token" ng-model="model.access_token.creds.access_token">
 		  </div>
 		</form>
 		<div id="errorMsg" class="ui error message" style="display: none;">
-			[[model.errorMsg.message]]
+			<ul>
+				<li ng-repeat="msg in model.errorMsg.message">
+					[[msg]]
+				</li>
+			</ul>
 		</div>
 		<div id="connectMerchant" style="display: none;">
 			<cwpp-button></cwpp-button>

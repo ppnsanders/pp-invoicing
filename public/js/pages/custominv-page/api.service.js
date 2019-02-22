@@ -12,7 +12,7 @@ function setup() {
 	if(model.query.inv) {
 		model.getInvoiceDetails()
 	} else {
-		//show error, no invoice in URL..
+
 	}
 }
 

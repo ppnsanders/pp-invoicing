@@ -484,11 +484,13 @@
                 </div>
             </div>
             <div id="sendInvoiceResponse" class="column" style="display: none;">
+                <center><h3>Send Invoice Response Object</h3></center>
+                 <a ng-if="!model.sendObj.send_to_recipient" id="showCustomInvoiceButton" style="display: none;" class="fluid ui primary button" href="/custominv?inv=[[model.invoiceId]]" target="_self">Show Custom Invoice</a>
                 <div id="sendInvoiceResponseLoading" style="display: none;">
                     <segment-loader></segment-loader>
                 </div>
-                <center><h3>Send Invoice Response Object</h3></center>
-                <a ng-if="!model.sendObj.send_to_recipient" id="showCustomInvoiceButton" style="display: none;" class="fluid ui primary button" href="/custominv?inv=[[model.invoiceId]]" target="_self">Show Custom Invoice</a>
+                
+               
                 <div id="sendInvoiceResponseJson" style="display: none;">
                     <div class="ui segment" style="overflow: scroll; margin-top: 20px;">
                         <pre>

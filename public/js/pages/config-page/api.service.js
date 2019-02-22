@@ -4,6 +4,11 @@ angular.module('ppinvoicing').service('configServiceModel', function ($http, $co
 
 function setup() {
 	model.config = $cookies.getObject('invoicing-config')
+	if(typeof model.config.partner !== 'undefined') {
+		model.getAccessToken()
+	} else {
+		model.showConfigModal()
+	}
 }
 
 function useDefault() {
@@ -40,6 +45,7 @@ function getAccessToken() {
 		return $http.post(reqUrl, model.config.partner, config).then((response) => {
 					model.access_token = response.data
 					$cookies.putObject('inv-auth', model.access_token)
+					$('#accessTokenField').show()
 		})
 	} else {
 		//do nothing, but show errors
@@ -62,12 +68,12 @@ function saveSettings() {
 		$('#configModal').modal('hide')
 	} else {
 		//do nothing, show errors
-		console.log('here')
 		return false
 	}
 }
 
 function validateConfig() {
+	model.errorMsg.message = []
 	const conConfig = model.validateConsumerConfig()
 	const merConfig = model.validateMerchantConfig()
 	const parConfig = model.validatePartnerConfig()
@@ -84,17 +90,17 @@ function validateConsumerConfig() {
 			if(typeof model.config.consumer.email !== 'undefined') {
 				return true
 			} else {
-				model.errorMsg.message = model.errorMsg.message + "You must have a Consumer Email Address"
+				model.errorMsg.message.push("You must have a Consumer Email Address")
 				$('#errorMsg').show()
 				return false
 			}
 		} else {
-			model.errorMsg.message = model.errorMsg.message + "You must have a Consumer Email Address"
+			model.errorMsg.message.push("You must have a Consumer Email Address")
 			$('#errorMsg').show()
 			return false
 		}
 	} else {
-		model.errorMsg.message = model.errorMsg.message + "You must have a Consumer Email Address"
+		model.errorMsg.message.push("You must have a Consumer Email Address")
 		$('#errorMsg').show()
 		return false
 	}
@@ -106,17 +112,17 @@ function validateMerchantConfig() {
 			if(typeof model.config.merchant.email !== 'undefined') {
 				return true
 			} else {
-				model.errorMsg.message = model.errorMsg.message + "You must have a Merchant Email Address"
+				model.errorMsg.message.push("You must have a Merchant Email Address")
 				$('#errorMsg').show()
 				return false
 			}
 		} else {
-			model.errorMsg.message = model.errorMsg.message + "You must have a Merchant Email Address"
+			model.errorMsg.message.push("You must have a Merchant Email Address")
 			$('#errorMsg').show()
 			return false
 		}
 	} else {
-		model.errorMsg.message = model.errorMsg.message + "You must have a Merchant Email Address"
+		model.errorMsg.message.push("You must have a Merchant Email Address")
 		$('#errorMsg').show()
 		return false
 	}
@@ -130,27 +136,27 @@ function validatePartnerConfig() {
 					if(typeof model.config.partner.email !== 'undefined') {
 						return true
 					} else {
-						model.errorMsg.message = model.errorMsg.message + "You must have a Partner Email Address"
+						model.errorMsg.message.push("You must have a Partner Email Address")
 						$('#errorMsg').show()
 						return false
 					}
 				} else {
-					model.errorMsg.message = model.errorMsg.message + "You must have a Partner Client_Secret"
+					model.errorMsg.message.push("You must have a Partner Client_Secret")
 					$('#errorMsg').show()
 					return false
 				}
 			} else {
-				model.errorMsg.message = "You must input a Partner Client_Id"
+				model.errorMsg.message.push("You must input a Partner Client_Id")
 				$('#errorMsg').show()
 				return false
 			}
 		} else {
-			model.errorMsg.message = "You must input Partner Details"
+			model.errorMsg.message.push("You must input Partner Details (email, client_id, client_secret)")
 			$('#errorMsg').show()
 			return false
 		}
 	} else {
-		model.errorMsg.message = "You must input Partner Details"
+		model.errorMsg.message.push("You must input Partner Details")
 		$('#errorMsg').show()
 		return false
 	}
@@ -207,7 +213,6 @@ function getMerchantEmail() {
     }
 	return $http.post(reqUrl, { access_token: model.access_token }, config).then((response) => {
 		model.config.merchant.email = response.data.email
-		console.log('got email: ', model.config)
 		$cookies.putObject('invoicing-config', model.config)
 	})
 }
@@ -219,7 +224,7 @@ let model = {
 	query: {},
 	access_token: "",
 	refresh_token: "",
-	errorMsg: { message: "Fill out the Form"},
+	errorMsg: { message: []},
 	setup: (model) => {
 		return setup(model)
 	},
