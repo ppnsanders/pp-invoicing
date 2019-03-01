@@ -14,10 +14,8 @@ module.exports = (router) => {
   			url: reqUrl + "/v1/identity/oauth2/userinfo?schema=paypalv1.1",
   			method: "GET",
   			headers: {
-  				"Accept": "application/json",
             	"Content-Type": "application/json",
-            	"Accept-Language": "en_US",
-            	"Authorization": "Bearer " + req.body.access_token.creds.body.access_token
+            	"Authorization": "Bearer " + req.body.access_token
   			},
   			json: true
   		}
@@ -26,7 +24,6 @@ module.exports = (router) => {
 	    		console.log("ERROR Getting merchantEmail: ", err)
 	    		res.json({error: true, responseCode: 500, errorMessage: err })
 	    	} else {
-            console.log(response.body)
   	    		response.body.emails.forEach((email) => {
   	    			if(email.primary) {
   	    				if(email.confirmed) {

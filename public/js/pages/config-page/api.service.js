@@ -234,19 +234,17 @@ function getTokenFromCode() {
     	  reqObj.partner.client_id = model.config.partner.client_id
     	  reqObj.partner.client_secret = model.config.partner.client_secret
 	return $http.post(reqUrl, reqObj, config).then((response) => {
-		console.log(response)
-		model.config.access_token = response.data
+		model.config.access_token = response.data.creds.body.access_token
 		model.config.refresh_token = response.data.creds.body.refresh_token
 		model.getMerchantEmail((err, email) => {
 			if(err) { 
 				console.log('error getting merchant email: ', err)
 			} else {
-				//hide the loader and show the config, then reload the page
 				$('#configModalLoading').hide()
+				$('#useDefaultButton').hide()
+				$('#cancelEditButton').hide()
+				$('#connectMerchantButton').hide()
 				$('#configured').show()
-				setTimeout(() => {
-					$window.location.reload();
-				}, 1000)
 			}
 			
 		})
@@ -259,7 +257,7 @@ function getMerchantEmail(cb) {
         'xsrfHeaderName': 'X-CSRF-TOKEN',
         'xsrfCookieName': 'XSRF-TOKEN'
     }
-    $http.post(reqUrl, { access_token: model.config.access_token }, config).then((response) => {
+    $http.post(reqUrl, , config).then((response) => {
 		model.config.merchant.email = response.data.email
 		$cookies.putObject('invoicing-config', model.config)
 		cb(null, response.data.email)
