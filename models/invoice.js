@@ -3,7 +3,7 @@
 const sandbox = Environment()
 const faker = require('faker')
 
-module.exports = function InvoiceModel(invData) {
+module.exports = function InvoiceModel(invData, invNum) {
 	const dt = new Date()
 	const invDate = "" + dt.getFullYear() + "-" + ("0" + (dt.getMonth() + 1)).slice(-2) + "-" + ("0" + (dt.getDate())).slice(-2) + ""
 
@@ -13,7 +13,7 @@ module.exports = function InvoiceModel(invData) {
 
 	let inv = {}
 		inv.detail = {}
-		inv.detail.invoice_number = "" + Date.now() + ""
+		inv.detail.invoice_number = invNum
 		inv.detail.reference = "REF-" + inv.detail.invoice_number
 		inv.detail.invoice_date = invDate
 		inv.detail.currency_code = "USD"

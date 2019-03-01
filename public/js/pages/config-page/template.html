@@ -7,7 +7,7 @@
 		<form id="configured" class="ui form">
 		  <div class="field">
 			<label>Partner Email:</label>
-			<input type="text" name="pEmail" ng-model="model.config.partner.email" required>
+			<input id="pEmail" type="text" name="pEmail" ng-model="model.config.partner.email" required>
 		  </div>
 		  <div class="field">
 			<label>Partner Client ID:</label>
@@ -27,16 +27,17 @@
 		  </div>
 		  <div id="accessTokenField" class="disabled field" style="display: none;">
 			<label>Access Token:</label>
-			<input type="text" name="access_token" ng-model="model.access_token.creds.access_token">
+			<input type="text" name="access_token" ng-model="model.config.access_token">
 		  </div>
 		</form>
-		<div id="errorMsg" class="ui error message" style="display: none;">
-			<ul>
-				<li ng-repeat="msg in model.errorMsg.message">
-					[[msg]]
-				</li>
-			</ul>
+		<div id="errorMsg" class="ui error message" style="display: none;"> ERROR!!
+			<li ng-repeat="msg in model.errorMsg.message">
+				[[msg]]
+			</li>
 		</div>
+		<div id="configModalLoading" style="display: none;">
+                <segment-loader></segment-loader>
+        </div>
 		<div id="connectMerchant" style="display: none;">
 			<cwpp-button></cwpp-button>
 		</div>

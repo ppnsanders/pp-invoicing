@@ -26,13 +26,15 @@ module.exports = (router) => {
 	    		console.log("ERROR Getting merchantEmail: ", err)
 	    		res.json({error: true, responseCode: 500, errorMessage: err })
 	    	} else {
-	    		response.body.emails.forEach((email) => {
-	    			if(email.primary) {
-	    				if(email.confirmed) {
-	    					res.json({error: false, email: email.value })
-	    				}
-	    			}
-	    		})
+            console.log(response.body)
+  	    		response.body.emails.forEach((email) => {
+  	    			if(email.primary) {
+  	    				if(email.confirmed) {
+  	    					res.json({error: false, email: email.value })
+  	    				}
+  	    			}
+  	    		})
+
 	    	}
 	    })
   })

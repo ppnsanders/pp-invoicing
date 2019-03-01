@@ -5,9 +5,7 @@ angular.module('ppinvoicing').service('customInvoiceServiceModel', function ($ht
 
 function setup() {
 	$('.ui.accordion').accordion()
-	model.creds = $cookies.getObject('inv-auth')
 	model.config = $cookies.getObject('invoicing-config')
-	model.access_token = model.creds.creds.access_token
 	model.invoiceId = model.query.inv
 	if(model.query.inv) {
 		model.getInvoiceDetails()
@@ -23,7 +21,7 @@ function getInvoiceDetails() {
         'xsrfCookieName': 'XSRF-TOKEN'
     }
     const reqBody = {
-    		access_token: model.access_token,
+    		access_token: model.config.access_token,
     		invoiceId: model.invoiceId
     }
     return $http.post(reqUrl, reqBody, config).then((response) => {

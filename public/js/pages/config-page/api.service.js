@@ -1,17 +1,40 @@
 'use strict'
 
-angular.module('ppinvoicing').service('configServiceModel', function ($http, $cookies) {
+angular.module('ppinvoicing').service('configServiceModel', function ($http, $cookies, $window) {
 
 function setup() {
 	model.config = $cookies.getObject('invoicing-config')
-	if(typeof model.config.partner !== 'undefined') {
-		model.getAccessToken()
+	if(typeof model.config !== 'undefined') {
+		if(typeof model.config.partner !== 'undefined') {
+			model.getAccessToken()
+		} else {
+			model.showConfigModal()
+		}
 	} else {
+		//no config, show settings modal
+		model.config = {},
+		model.config.partner = {}
+		model.config.partner.email = ""
+		model.config.partner.client_id = ""
+		model.config.partner.client_secret = ""
+		model.config.merchant = {}
+		model.config.merchant.email = ""
+		model.config.consumer = {}
+		model.config.consumer.email = ""
+		model.config.access_token = ""
+		model.config.refresh_token = ""
+		model.config.history = []
+		$cookies.putObject('invoicing-config', model.config)
 		model.showConfigModal()
 	}
 }
 
 function useDefault() {
+	$('#useDefaultButton').hide()
+	$('#cancelEditButton').hide()
+	$('#connectMerchantButton').hide()
+	$('#errorMsg').hide()
+	model.showLoader()
 	model.config = {
 		partner: {
 			email: "githubMerchant@paypal.com",
@@ -23,34 +46,30 @@ function useDefault() {
 		},
 		consumer: {
 			email: "invReceiver@paypal.com"
-		}
+		},
+		access_token: "",
+		refresh_token: "",
+		history: []
 	}
-	$cookies.putObject('invoicing-config', model.config)
 	model.getAccessToken()
+	$cookies.putObject('invoicing-config', model.config)
 	model.errorMsg.message = ""
-	$('#useDefaultButton').hide()
-	$('#cancelEditButton').hide()
-	$('#connectMerchantButton').hide()
-	$('#errorMsg').hide()
+	setTimeout(() => {
+		model.hideLoader()
+	}, 500)
 }
 
 function getAccessToken() {
-	if(model.validatePartnerConfig()) {
-		$cookies.putObject('inv-auth', {})
 		const reqUrl = '/api/invoice/access_token'
 		const config = {
 	        'xsrfHeaderName': 'X-CSRF-TOKEN',
 	        'xsrfCookieName': 'XSRF-TOKEN'
 	    }
 		return $http.post(reqUrl, model.config.partner, config).then((response) => {
-					model.access_token = response.data
-					$cookies.putObject('inv-auth', model.access_token)
+					model.config.access_token = response.data.creds.access_token
 					$('#accessTokenField').show()
+					$cookies.putObject('invoicing-config', model.config)	
 		})
-	} else {
-		//do nothing, but show errors
-		return false
-	}
 }
 
 function cancelEditConfig() {
@@ -61,11 +80,24 @@ function showConfigModal() {
 	$('#configModal').modal('show')
 }
 
+function showLoader() {
+	$('#configured').hide()
+	$('#configModalLoading').show()
+}
+
+function hideLoader() {
+	$('#configModalLoading').hide()
+	$('#configured').show()
+}
+
 function saveSettings() {
-	if(model.validateConfig()) {
+	const config = validateConfig()
+	if(config) {
 		$cookies.putObject('invoicing-config', model.config)
-		model.getAccessToken()
 		$('#configModal').modal('hide')
+		setTimeout(() => {
+					$window.location.reload();
+		}, 200)
 	} else {
 		//do nothing, show errors
 		return false
@@ -164,6 +196,7 @@ function validatePartnerConfig() {
 
 function connectMerchant() {
 	if(model.validatePartnerConfig()) {
+		$cookies.putObject('invoicing-config', model.config)
 		$('#configured').hide()
 		$('#useDefaultButton').hide()
 		$('#cancelEditButton').hide()
@@ -171,7 +204,9 @@ function connectMerchant() {
 		$('#connectMerchantButton').hide()
 		$('#cancelConnectMerchantButton').show()
 		$('#connectMerchant').show()
-	} else {}
+	} else {
+		//show errors
+	}
 }
 
 function cancelConnectMerchant() {
@@ -185,6 +220,9 @@ function cancelConnectMerchant() {
 }
 
 function getTokenFromCode() {
+	model.showConfigModal()
+	$('#configured').hide()
+	$('#configModalLoading').show()
 	const reqUrl = "/api/config/generate"
 	const config = {
         'xsrfHeaderName': 'X-CSRF-TOKEN',
@@ -196,24 +234,35 @@ function getTokenFromCode() {
     	  reqObj.partner.client_id = model.config.partner.client_id
     	  reqObj.partner.client_secret = model.config.partner.client_secret
 	return $http.post(reqUrl, reqObj, config).then((response) => {
-		model.access_token = response.data
-		$cookies.putObject('inv-auth', model.access_token)
-		model.refresh_token = response.data.creds.body.refresh_token
-		$cookies.putObject('invoicing-refresh-token', model.refresh_token)
-		model.showConfigModal()
-		model.getMerchantEmail()
+		console.log(response)
+		model.config.access_token = response.data
+		model.config.refresh_token = response.data.creds.body.refresh_token
+		model.getMerchantEmail((err, email) => {
+			if(err) { 
+				console.log('error getting merchant email: ', err)
+			} else {
+				//hide the loader and show the config, then reload the page
+				$('#configModalLoading').hide()
+				$('#configured').show()
+				setTimeout(() => {
+					$window.location.reload();
+				}, 1000)
+			}
+			
+		})
 	})
 }
 
-function getMerchantEmail() {
+function getMerchantEmail(cb) {
 	const reqUrl = "/api/config/merchantEmail"
 	const config = {
         'xsrfHeaderName': 'X-CSRF-TOKEN',
         'xsrfCookieName': 'XSRF-TOKEN'
     }
-	return $http.post(reqUrl, { access_token: model.access_token }, config).then((response) => {
+    $http.post(reqUrl, { access_token: model.config.access_token }, config).then((response) => {
 		model.config.merchant.email = response.data.email
 		$cookies.putObject('invoicing-config', model.config)
+		cb(null, response.data.email)
 	})
 }
 
@@ -266,6 +315,12 @@ let model = {
 	},
 	validateConsumerConfig: (model) => {
 		return validateConsumerConfig(model)
+	},
+	showLoader: (model) => {
+		return showLoader(model)
+	},
+	hideLoader: (model) => {
+		return hideLoader(model)
 	}
 }
  

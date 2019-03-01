@@ -3,10 +3,13 @@
 angular.module('ppinvoicing').service('createinvServiceModel', function ($http, $cookies, $location) {
 
 function setup() {
-	model.creds = $cookies.getObject('inv-auth')
 	model.config = $cookies.getObject('invoicing-config')
-	model.access_token = model.creds.creds.access_token
-	model.getInvoice()
+	if(typeof model.config !== 'undefined') {
+			model.getInvoice()
+	} else {
+		//no creds, pop settings
+		$('#configModal').modal('show')
+	}
 }
 
 function getInvoice() {
@@ -31,7 +34,7 @@ function createInvoice() {
         'xsrfCookieName': 'XSRF-TOKEN'
     }
     let reqBody = {}
-    	reqBody.access_token = model.access_token
+    	reqBody.access_token = model.config.access_token
     	reqBody.invoice = model.invoiceObj
     return $http.post(reqUrl, reqBody, config).then((response) => {
     	model.invoiceResponse = response.data.invResponse
@@ -73,7 +76,7 @@ function sendInvoice() {
         'xsrfCookieName': 'XSRF-TOKEN'
     }
     let reqBody = {}
-    	reqBody.access_token = model.access_token
+    	reqBody.access_token = model.config.access_token
     	reqBody.url = model.invoiceResponse.body.href + "/send"
     	reqBody.body = model.sendObj
     return $http.post(reqUrl, reqBody, config).then((response) => {

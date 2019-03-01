@@ -58,8 +58,29 @@ module.exports = (router) => {
     })
 
   	router.post('/getObject', (req, res) => {
-  		let invoiceObj = new invModel(req.body)
-  		res.json(invoiceObj)
+      console.log('req: ', req.body)
+      const options = {
+        url: reqUrl + "/v2/invoicing/generate-next-invoice-number",
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Accept-Language": "en_US",
+          "Authorization": "Bearer " + req.body.access_token
+        },
+        body: {},
+        json: true
+      }
+      request(options, (err, response, body) => {
+        if(err) {
+          console.log("ERROR CREATING INVOICE NUMBER: ", err)
+          res.json({error: true, responseCode: 500, errorMessage: err })
+        } else {
+          console.log('invNum response: ', response.body)
+          let invoiceObj = new invModel(req.body, response.body.invoice_number)
+          res.json(invoiceObj)
+        }
+      })
   	})
 
   	router.post('/create', (req, res) => {

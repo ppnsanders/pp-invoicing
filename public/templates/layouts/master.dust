@@ -24,18 +24,17 @@
             <footer-nav></footer-nav>
         </div>
 
-        <!-- Angular Pages -->
-        <script src="/js/pages/home-page/directive.js"></script>
-        <script src="/js/pages/config-page/directive.js"></script>
-        <script src="/js/pages/createinv-page/directive.js"></script>
-        <script src="/js/pages/custominv-page/directive.js"></script>
-        
-
         <!-- Angular Services -->
         <script src="/js/pages/home-page/api.service.js"></script>
         <script src="/js/pages/config-page/api.service.js"></script>
         <script src="/js/pages/createinv-page/api.service.js"></script>
         <script src="/js/pages/custominv-page/api.service.js"></script>
+
+        <!-- Angular Pages -->
+        <script src="/js/pages/home-page/directive.js"></script>
+        <script src="/js/pages/config-page/directive.js"></script>
+        <script src="/js/pages/createinv-page/directive.js"></script>
+        <script src="/js/pages/custominv-page/directive.js"></script>
 
         <!-- Angular Partials -->
         <script src="/js/partials/header-nav/directive.js"></script>
