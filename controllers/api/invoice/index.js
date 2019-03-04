@@ -58,7 +58,6 @@ module.exports = (router) => {
     })
 
   	router.post('/getObject', (req, res) => {
-      console.log('req: ', req.body)
       const options = {
         url: reqUrl + "/v2/invoicing/generate-next-invoice-number",
         method: "POST",
@@ -76,7 +75,6 @@ module.exports = (router) => {
           console.log("ERROR CREATING INVOICE NUMBER: ", err)
           res.json({error: true, responseCode: 500, errorMessage: err })
         } else {
-          console.log('invNum response: ', response.body)
           let invoiceObj = new invModel(req.body, response.body.invoice_number)
           res.json(invoiceObj)
         }

@@ -257,7 +257,7 @@ function getMerchantEmail(cb) {
         'xsrfHeaderName': 'X-CSRF-TOKEN',
         'xsrfCookieName': 'XSRF-TOKEN'
     }
-    $http.post(reqUrl, , config).then((response) => {
+    $http.post(reqUrl, model.config, config).then((response) => {
 		model.config.merchant.email = response.data.email
 		$cookies.putObject('invoicing-config', model.config)
 		cb(null, response.data.email)

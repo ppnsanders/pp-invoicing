@@ -11,6 +11,28 @@ module.exports = function InvoiceModel(invData, invNum) {
 		  ddt.setDate(ddt.getDate() + 10)
 	const dueDate = "" + ddt.getFullYear() + "-" + ("0" + (ddt.getMonth() + 1)).slice(-2) + "-" + ("0" + (ddt.getDate())).slice(-2) + ""
 
+	let merEmail = ""
+	if(typeof invData.merchant !== 'undefined') {
+		if(typeof invData.merchant.email !== 'undefined'){
+			merEmail = invData.merchant.email 
+		} else {
+			merEmail = "invSender@paypal.com"
+		}
+	} else {
+		merEmail = "invSender@paypal.com"
+	}
+
+	let conEmail = ""
+	if(typeof invData.consumer !== 'undefined') {
+		if(typeof invData.consumer.email !== 'undefined') {
+			conEmail = invData.consumer.email
+		} else {
+			conEmail = "invReceiver@paypal.com"
+		}
+	} else {
+		conEmail = "invReceiver@paypal.com"
+	}
+
 	let inv = {}
 		inv.detail = {}
 		inv.detail.invoice_number = invNum
@@ -36,7 +58,7 @@ module.exports = function InvoiceModel(invData, invNum) {
 		inv.invoicer.address.admin_area_1 = "NE"
 		inv.invoicer.address.postal_code = "68046"
 		inv.invoicer.address.country_code = "US"
-		inv.invoicer.email_address = invData.merchant.email
+		inv.invoicer.email_address = merEmail
 		inv.invoicer.phones = []
 		inv.invoicer.phones[0] = {}
 		inv.invoicer.phones[0].country_code = "001"
@@ -61,7 +83,7 @@ module.exports = function InvoiceModel(invData, invNum) {
 		inv.primary_recipients[0].billing_info.address.admin_area_1 = "NE"
 		inv.primary_recipients[0].billing_info.address.postal_code = "68046"
 		inv.primary_recipients[0].billing_info.address.country_code = "US"
-		inv.primary_recipients[0].billing_info.email_address = invData.consumer.email
+		inv.primary_recipients[0].billing_info.email_address = conEmail
 		inv.primary_recipients[0].billing_info.phones = []
 		inv.primary_recipients[0].billing_info.phones[0] = {}
 		inv.primary_recipients[0].billing_info.phones[0].country_code = "001"
