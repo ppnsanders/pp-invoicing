@@ -15,6 +15,10 @@ angular.module('ppinvoicing').directive('headerNav', [ () => {
 							{
 								url: "/createinv",
 								text: "Create Invoice"
+							},
+							{
+								url: "/listinv",
+								text: "List Invoices"
 							}
 						]
 			$scope.showConfigModal = () => {

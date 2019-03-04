@@ -1,1 +1,96 @@
-List Inv Page
+<div class="ui form">
+  <div class="fields">
+  	<div class="inline field">
+  		<label>Total Required:</label>
+  		<input type="text" ng-model="model.queryParams.total_required">
+  	</div>
+    <div class="inline field">
+      <label>Page: </label>
+      <input type="text" ng-model="model.queryParams.page">
+    </div>
+    <div class="inline field">
+      <label>Page Size:</label>
+      <input type="text" ng-model="model.queryParams.page_size">
+    </div>
+    <div class="inline field">
+      <label>Fields:</label>
+      <input type="text" ng-model="model.queryParams.fields">
+    </div>
+    <div class="inline field">
+    	<label></label>
+		<button id="runButton" class="ui primary button" ng-click="model.listInvoices()">Run</button>
+    </div>
+  </div>
+</div>
+
+<!-- ORDER BY OPTION BUTTONS -->
+<div class="ui grid">
+	<div class="four wide column">
+		<center>
+			Inv Num <br />
+			<button class="ui icon button" ng-click="model.setOrderBy('-detail.invoice_number')">
+				<i class="angle down icon"></i>
+			</button>
+			<button class="ui icon button" ng-click="model.setOrderBy('detail.invoice_number')">
+				<i class="angle up icon"></i>
+			</button>
+		</center>
+	</div>
+	<div class="four wide column">
+		<center>
+			Created <br />
+			<button class="ui icon button" ng-click="model.setOrderBy('-detail.metadata.create_time')">
+				<i class="angle down icon"></i>
+			</button>
+			<button class="ui icon button" ng-click="model.setOrderBy('detail.metadata.create_time')">
+				<i class="angle up icon"></i>
+			</button>
+		</center>
+	</div>
+	<div class="four wide column">
+		<center>
+			Amount <br />
+			<button class="ui icon button" ng-click="model.setOrderBy('-amount.value')">
+				<i class="angle down icon"></i>
+			</button>
+			<button class="ui icon button" ng-click="model.setOrderBy('amount.value')">
+				<i class="angle up icon"></i>
+			</button>
+		</center>
+	</div>
+	<div class="four wide column">
+		<center>
+			Status<br />
+			<button class="ui icon button" ng-click="model.setOrderBy('-status')">
+				<i class="angle down icon"></i>
+			</button>
+			<button class="ui icon button" ng-click="model.setOrderBy('status')">
+				<i class="angle up icon"></i>
+			</button>
+		</center>
+	</div>
+</div>
+<div style="margin-top: 10px"></div>
+
+
+
+<!-- LIST -->
+<div class="ui styled fluid accordion">
+	<div ng-repeat="inv in model.invoices | orderBy: model.orderBy">
+  		<div class="title overdue">
+  		  	<i class="dropdown icon"></i>
+  		  	INV. NUMBER: [[inv.detail.invoice_number]] - CREATED: [[inv.detail.metadata.create_time | date: 'medium']] - AMOUNT: [[inv.amount.value | currency]]
+  		  	<span ng-if="checkOverDue(inv)" class="OVERDUE">- OVERDUE: [[inv.detail.payment_term.due_date | date: 'shortDate']]
+  		  	</span>
+  		  	<span ng-if="!checkOverDue(inv)">- DUE: [[inv.detail.payment_term.due_date | date: 'shortDate']]
+  		  	</span>
+  		  	<span style="float: right;" class="[[inv.status]]">
+  		  		[[inv.status]]
+  		  	</span>
+  		</div>
+  		<div class="content overdue">
+  		  	<a id="showCustomInvoiceButton" style="display: none;" class="fluid ui primary button" href="/custominv?inv=[[inv.id]]" target="_self">Show Custom Invoice</a>
+  		  	<pre>[[ inv | json]]</pre>
+  		</div>
+	</div>
+</div>
