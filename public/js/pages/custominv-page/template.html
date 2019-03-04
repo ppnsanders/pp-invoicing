@@ -1,3 +1,32 @@
+<style type="text/css">
+#paidBackground {
+    position:absolute;
+    z-index:-1000;
+    background:white;
+    display:block;
+    min-height:100%; 
+    min-width:100%;
+    color:yellow;
+}
+
+#paidcontent{
+    position:absolute;
+    z-index:-999;
+}
+
+#paidbgtext
+{
+    color:green;
+    font-size:120px;
+    transform:rotate(300deg);
+    -webkit-transform:rotate(300deg);
+}
+</style>
+
+<div ng-if="!model.unpaid" id="paidBackground">
+	<p id="paidbgtext">PAID</p>
+</div>
+
 <div class="ui grid">
 	<div class="one column row">
 		<div class="column">
@@ -121,7 +150,7 @@
 				<tbody>
 				  	<tr ng-repeat="trx in model.invoice.payments.transactions">
 				    	<td data-label="Transaction ID">[[trx.payment_id]]</td>
-				    	<td data-label="Date">[[trx.payment_date]]</td>
+				    	<td data-label="Date">[[trx.payment_date | date: 'medium']]</td>
 				    	<td data-label="Method">[[trx.method]]</td>
 				    	<td data-label="Amount" class="right aligned">[[trx.amount.value | currency: "$"]]</td>
 				  	</tr>
