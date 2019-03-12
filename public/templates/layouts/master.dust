@@ -30,6 +30,7 @@
         <script src="/js/pages/createinv-page/api.service.js"></script>
         <script src="/js/pages/custominv-page/api.service.js"></script>
         <script src="/js/pages/listinv-page/api.service.js"></script>
+        <script src="/js/partials/payment-modal/api.service.js"></script>
 
         <!-- Angular Pages -->
         <script src="/js/pages/home-page/directive.js"></script>
@@ -43,6 +44,7 @@
         <script src="/js/partials/footer-nav/directive.js"></script>
         <script src="/js/partials/segment-loader/directive.js"></script>
         <script src="/js/partials/cwpp-button/directive.js"></script>
+        <script src="/js/partials/payment-modal/directive.js"></script>
         <script src="/js/partials/cwpp-button/api.service.js"></script>
         
         <!-- Connect with PayPal Script -->

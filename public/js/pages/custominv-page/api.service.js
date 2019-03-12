@@ -38,7 +38,7 @@ function getInvoiceDetails() {
 }
 
 function setStatus() {
-	if(model.invoice.status === "PAID") {
+	if(model.invoice.status === "PAID" || model.invoice.status === "MARKED_AS_PAID") {
 		model.unpaid = false
 	} else {
 		model.unpaid = true

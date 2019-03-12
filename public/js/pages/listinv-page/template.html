@@ -80,17 +80,23 @@
   		<div class="title overdue">
   		  	<i class="dropdown icon"></i>
   		  	INV. NUMBER: [[inv.detail.invoice_number]] - CREATED: [[inv.detail.metadata.create_time | date: 'medium']] - AMOUNT: [[inv.amount.value | currency]]
-  		  	<span ng-if="checkOverDue(inv)" class="OVERDUE">- OVERDUE: [[inv.detail.payment_term.due_date | date: 'shortDate']]
-  		  	</span>
-  		  	<span ng-if="!checkOverDue(inv)">- DUE: [[inv.detail.payment_term.due_date | date: 'shortDate']]
-  		  	</span>
+  		  	<span ng-if="checkOverDue(inv)" class="OVERDUE">- OVERDUE: [[inv.detail.payment_term.due_date | date: 'shortDate']]</span>
+  		  	<span ng-if="!checkOverDue(inv)">- DUE: [[inv.detail.payment_term.due_date | date: 'shortDate']]</span>
+
   		  	<span style="float: right;" class="[[inv.status]]">
   		  		[[inv.status]]
   		  	</span>
   		</div>
   		<div class="content overdue">
-  		  	<a id="showCustomInvoiceButton" style="display: none;" class="fluid ui primary button" href="/custominv?inv=[[inv.id]]" target="_self">Show Custom Invoice</a>
+  		  	<a id="showCustomInvoiceButton" href="/custominv?inv=[[inv.id]]" target="_self" class="ui icon button" title="View Invoice">
+  				<i class="eye icon"></i>
+			</a>
+  		  	<button ng-click="makePayment(inv.id)" id="makePaymentButton" ng-if="model.setPayStatus(inv.status)" class="ui icon button payment" title="Make A Payment">
+  				<i class="money bill alternate icon"></i>
+			</button>
   		  	<pre>[[ inv | json]]</pre>
   		</div>
 	</div>
 </div>
+
+<payment-modal></payment-modal>

@@ -1,31 +1,30 @@
 <style type="text/css">
 #paidBackground {
     position:absolute;
-    z-index:-1000;
     background:white;
     display:block;
     min-height:100%; 
     min-width:100%;
-    color:yellow;
-}
-
-#paidcontent{
-    position:absolute;
-    z-index:-999;
 }
 
 #paidbgtext
 {
     color:green;
-    font-size:120px;
+    font-size:60px;
     transform:rotate(300deg);
     -webkit-transform:rotate(300deg);
+    z-index: -1000;
+}
+
+#unpaidbgtext
+{
+    color:red;
+    font-size:60px;
+    transform:rotate(300deg);
+    -webkit-transform:rotate(300deg);
+    z-index: -1000;
 }
 </style>
-
-<div ng-if="!model.unpaid" id="paidBackground">
-	<p id="paidbgtext">PAID</p>
-</div>
 
 <div class="ui grid">
 	<div class="one column row">
@@ -46,9 +45,8 @@
 			</address>
 		</div>
 	  	<div class="column">Email: <a href="mailto:[[model.invoice.invoicer.email_address]]">[[model.invoice.invoicer.email_address]]</a> - [[model.invoice.invoicer.phones[0].phone_type]] Phone: <a href="tell: +[[model.invoice.invoicer.phones[0].country_code]][[model.invoice.invoicer.phones[0].national_number]]">[[model.invoice.invoicer.phones[0].country_code]]-[[model.invoice.invoicer.phones[0].national_number]]</a></div>
-	  	<div class="column"></div>
 	</div>
-	<div class="two column row">
+	<div class="three column row">
 		<div class="column">
 			TO: [[model.invoice.primary_recipients[0].billing_info.name.given_name]] [[model.invoice.primary_recipients[0].billing_info.name.surname]]
 			<address>
@@ -58,8 +56,17 @@
 				[[model.invoice.primary_recipients[0].billing_info.address.country_code]] <br />
 			</address>
 		</div>
-	  	<div class="column">Email: <a href="mailto:[[model.invoice.primary_recipients[0].billing_info.email_address]]">[[model.invoice.primary_recipients[0].billing_info.email_address]]</a></div>
-	  	<div class="column"></div>
+	  	<div class="column">
+	  		Email: <a href="mailto:[[model.invoice.primary_recipients[0].billing_info.email_address]]">[[model.invoice.primary_recipients[0].billing_info.email_address]]</a>
+	  	</div>
+	  	<div class="column">
+			<div ng-if="!model.unpaid">
+				<p id="paidbgtext">PAID</p>
+			</div>
+			<div ng-if="model.unpaid">
+				<p id="unpaidbgtext">[[model.invoice.status]]</p>
+			</div>
+	  	</div>
 	</div>
 	<div class="three column row">
 		<div class="column">

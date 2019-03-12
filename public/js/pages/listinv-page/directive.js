@@ -4,7 +4,7 @@ angular.module('ppinvoicing').directive('listinvPage', [ () => {
 	return {
 		restrict: 'E',
 		scope: {},
-		controller: ['$scope', '$http', 'listInvoiceServiceModel', ($scope, $http, listInvoiceServiceModel) => {
+		controller: ['$scope', '$http', 'listInvoiceServiceModel', '$location', ($scope, $http, listInvoiceServiceModel, $location) => {
 			$scope.model = listInvoiceServiceModel
 			$scope.model.setup()
 			$scope.checkOverDue = (inv) => {
@@ -27,6 +27,10 @@ angular.module('ppinvoicing').directive('listinvPage', [ () => {
 				} else {
 					return false
 				}
+			}
+			$scope.makePayment = (id) => {
+				$location.search('invoiceId', id)
+				$('#paymentModal').modal('show')
 			}
 		}],
 		templateUrl: '/js/pages/listinv-page/template.html'

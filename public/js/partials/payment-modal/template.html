@@ -1,0 +1,74 @@
+<div id="paymentModal" class="ui large modal">
+  <div class="ui icon header">
+	<i class="money bill alternate icon"></i>
+	Collect Payment for [[model.invoiceId]]
+  </div>
+  <div class="content">
+		<form id="collect" class="ui form">
+			<div class="field">
+				<label>Method</label>
+	            <div class="ui selection dropdown">
+      	          	<input type="hidden" name="method">
+      	          	<i class="dropdown icon"></i>
+      	          	<div class="default text">-- SELECT --</div>
+      	          	<div class="menu">
+	      	            <div class="item" data-value="[[model.methods[0].value]]" ng-click="model.createPayment.method=model.methods[0].value">
+	      	              	[[model.methods[0].name]]
+	      	            </div>
+	      	            <div class="item" data-value="[[model.methods[1].value]]" ng-click="model.createPayment.method=model.methods[1].value">
+	      	              	[[model.methods[1].name]]
+	      	            </div>
+	      	            <div class="item" data-value="[[model.methods[2].value]]" ng-click="model.createPayment.method=model.methods[2].value">
+	      	              	[[model.methods[2].name]]
+	      	            </div>
+	      	            <div class="item" data-value="[[model.methods[3].value]]" ng-click="model.createPayment.method=model.methods[3].value">
+	      	              	[[model.methods[3].name]]
+	      	            </div>  
+	      	            <div class="item" data-value="[[model.methods[4].value]]" ng-click="model.createPayment.method=model.methods[4].value">
+	      	              	[[model.methods[4].name]]
+	      	            </div>  
+	      	            <div class="item" data-value="[[model.methods[5].value]]" ng-click="model.createPayment.method=model.methods[5].value">
+	      	              	[[model.methods[5].name]]
+	      	            </div>  
+	      	            <div class="item" data-value="[[model.methods[6].value]]" ng-click="model.createPayment.method=model.methods[6].value">
+	      	              	[[model.methods[6].name]]
+	      	            </div>  
+	      	            <div class="item" data-value="[[model.methods[7].value]]" ng-click="model.createPayment.method=model.methods[7].value">
+	      	              	[[model.methods[7].name]]
+	      	            </div>
+      	        	</div>
+      	      	</div>
+			</div>
+		  <div class="field">
+			<label>Amount:</label>
+			<input id="amount" type="text" name="amount" ng-model="model.createPayment.amount.value" value="[[model.payment.amount.value]]" required>
+		  </div>
+		  <div class="field">
+			<label>Currency Code:</label>
+			<input id="currencyCode" type="text" name="currency_code" ng-model="model.createPayment.amount.currency_code" required>
+		  </div>
+		  <div class="field">
+		  	<label>Note:</label>
+		  	<textarea rows="3" ng-model="model.createPayment.note" value="[[model.payment.note]]"></textarea>
+		  </div>
+		</form>
+		<div id="paymentErrorMsg" class="ui error message" style="display: none;"> ERROR!!
+			<li ng-repeat="msg in model.errMsg.message">
+				[[msg]]
+			</li>
+		</div>
+		<div id="paymentModalLoading" style="display: none;">
+                <segment-loader></segment-loader>
+        </div>
+  </div>
+  <div class="actions">
+	<div id="cancelPaymentButton" ng-click="model.cancelPayment()" class="ui red submit button">
+	  <i class="remove icon"></i>
+	  Cancel
+	</div>
+	<div id="makePaymentButton" ng-click="model.makePayment()" class="ui green submit button">
+	  <i class="checkmark icon"></i>
+	  Make Payment
+	</div>
+  </div>
+</div>

@@ -34,6 +34,18 @@ function listInvoices() {
 	})
 }
 
+function setPayStatus(status) {
+	if(typeof status === 'undefined') {
+		 return false
+	} else {
+		if(status === 'SENT' || status === 'UNPAID' || status === 'PARTIALLY_PAID' || status === 'PAYMENT_PENDING') {
+           return true 
+        } else {
+           return false
+        }
+	}
+}
+
 function setOrderBy(order) {
 	model.orderBy = order
 }
@@ -57,6 +69,9 @@ let model = {
 		},
 		setOrderBy: (model) => {
 			return setOrderBy(model)
+		},
+		setPayStatus: (model) => {
+			return setPayStatus(model)
 		}
 }
  
