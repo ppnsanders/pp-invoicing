@@ -14,7 +14,13 @@ The App is quite simple.
 5. run `npm start`
 6. Open your browser to [http://localhost:8000/](http://localhost:8000/)
 
-On the "home page", you'll see the Invoice Fields and Object.  Before editing those details, click on the "gears" icon in the top right to setup your API credentials.
+On the "home page", you'll be prompted for your setup information. This setup information consists of the following:
+
+1. Partner
+2. Merchant (invoice Sender)
+3. Consumer (invoice Receiver)
+
+This application assumes that you (the user) is the Partner.
 
 You MUST set a Partner `email`, Partner `client_id`, and Partner `client_secret` to use this application.
 
@@ -34,3 +40,7 @@ Then click "Save Settings".  This just sets some cookies with your credentials a
 As the default is to not send an email to the recipient, you can click the "Show Custom Invoice" button to see the Invoice in a custom layout as built by me in HTML/AngularJS.
 
 I'll try to clean this up before Invoicing `v2` is no longer [Limited Release](https://developer.paypal.com/docs/limited-release/invoicing/api/), and add some more intuitive handles for the Connecting a Merchant to use your own credentials.
+
+You'll also see a link in the top nav for "List Invoices", once you create a few invoices, you'll see them here.  From this page you can "make a payment" via the payment icon.  This simulates a Consumer paying the Merchant for an invoice with another method besides the Consumer paying online via PayPal. There is minimal validation done on the form to check that the amount entered isn't more than is due and that the currency is the same as the invoice currency, but that is all.  From this accordion view you can also click the "view invoice" icon and see the invoice as the customer would see it. The custom invoice URL is simple it's just `http://localhost:8000/custominv?inv=<PayPal_Invoice_ID>`. That would show you the invoice as the customer sees it with the transactions already completed and the status showing on the invoice. 
+
+I'll add additional functionality as needed to complete this application, but for the most part, my testing should demonstrate the ability of the `v2 Invoicing APIs`.
