@@ -78,7 +78,6 @@ function validatePayment(cb) {
 						} else {
 							//currency code invalid
 							model.errMsg.message.push("Your Currency must be the same as the invoice. " + model.invoice.amount.currency_code)
-							
 							cb(null, false)
 						}
 					} else {
@@ -87,6 +86,13 @@ function validatePayment(cb) {
 						cb(null, false)
 					}
 				} else {
+					//no due amount value.. in the due_amount obj
+					//no error to show.. but there is an error.. 
+					console.log('no due_amount.value in the due_amount object')
+					cb(null, false)
+				}
+			} else {
+				console.log('no due_amount, using invoice amount')
 					invAmount = parseFloat(model.invoice.amount.value)
 					if(invAmount >= pmtAmount) {
 						if(model.invoice.amount.currency_code === model.createPayment.amount.currency_code) {
@@ -103,13 +109,7 @@ function validatePayment(cb) {
 							$('#errorMsg').show()
 							cb(null, false)
 					}
-				}
-			} else {
-				console.log('no due_amount')
-				invAmount = parseFloat(model.invoice.amount.value)
 			}
-			
-			
 		}
 
 	})
